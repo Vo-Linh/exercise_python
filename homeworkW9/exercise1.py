@@ -5,13 +5,13 @@ class Employee:
     def getId(self):
         return self.id
 
-    def getName(self):
-        return self.name
+    def setName(self, name):
+        self.name = name
     def getName(self):
         return self.name
 
-    def getSalary(self):
-        return self.salary
+    def setSalary(self, salary):
+        self.salary = salary
     def getSalary(self):
         return self.salary
 
