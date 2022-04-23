@@ -1,5 +1,20 @@
 
 class People:
+    def setId(self, id):
+        self.id = id
+    def getId(self):
+        return self.id
+
+    def getName(self):
+        return self.name
+    def getName(self):
+        return self.name
+
+    def getAge(self):
+        return self.age
+    def getAge(self):
+        return self.age
+
     def __init__(self, id: str, name: str, age: int):
         self.id = id
         self.name = name 

@@ -1,44 +1,77 @@
-n = int(input('Enter n: \n'))
+from __future__ import unicode_literals
 
-sum = 0
-for i in range(1, n+1):
-    sum += i
+# the u indicates that the string is a unicode object. https://docs.python.org/2/howto/unicode.html
+to_19 = (u'không', u'một', u'hai', u'ba', u'bốn', u'năm', u'sáu',
+         u'bảy', u'tám', u'chín', u'mười', u'mười một', u'mười hai',
+         u'mười ba', u'mười bốn', u'mười lăm', u'mười sáu', u'mười bảy',
+         u'mười tám', u'mười chín')
 
-sum2 = 0
-print("=============================")
-for i in range(1, 2 * n + 2, 2):
-    print(i)
-    sum += 1/i
+tens = (u'hai mươi', u'ba mươi', u'bốn mươi', u'năm mươi',
+        u'sáu mươi', u'bảy mươi', u'tám mươi', u'chín mươi')
 
-sum3 = 0
-for i in range(1, n + 1):
-    if (i % 2 != 0):
-        sum3 += 1
-
-
-def check_prime_number(n):
-    flag = 1
-    if (n <2):
-        return False  
-    
-    for p in range(2, n):
-        if n % p == 0:
-            flag = False
-            return flag
-    return True
-
-for i in range(n):
-    if check_prime_number(i):
-        print(i)
+denom = ('',
+         u'nghìn', u'triệu', u'tỷ', u'nghìn tỷ', u'trăm nghìn tỷ',
+         'Quintillion', 'Sextillion', 'Septillion', 'Octillion', 'Nonillion',
+         'Decillion', 'Undecillion', 'Duodecillion', 'Tredecillion',
+         'Quattuordecillion', 'Sexdecillion', 'Septendecillion',
+         'Octodecillion', 'Novemdecillion', 'Vigintillion')
 
 
-def find_square_number(n):
-    flag = False
+class Num2Word_VI(object):
 
-    if any(i**2 == n for i in range(n+1)):
-        flag = True
-    return flag
+    def _convert_nn(self, val):
+        if val < 20:
+            return to_19[val]
+        for (dcap, dval) in ((k, 20 + (10 * v)) for (v, k) in enumerate(tens)):
+            if dval + 10 > val:
+                if val % 10:
+                    a = u'lăm'
+                    if to_19[val % 10] == u'một':
+                        a = u'mốt'
+                    else:
+                        a = to_19[val % 10]
+                    if to_19[val % 10] == u'năm':
+                        a = u'lăm'
+                    return dcap + ' ' + a
+                return dcap
 
-for i in range(n):
-    if find_square_number(i):
-        print(i)
+    def _convert_nnn(self, val):
+        word = ''
+        (mod, rem) = (val % 100, val // 100)
+        if rem > 0:
+            word = to_19[rem] + u' trăm'
+            if mod > 0:
+                word = word + ' '
+        if mod > 0 and mod < 10:
+            if mod == 5:
+                word = word != '' and word + u'lẻ năm' or word + u'năm'
+            else:
+                word = word != '' and word + u'lẻ ' \
+                    + self._convert_nn(mod) or word + self._convert_nn(mod)
+        if mod >= 10:
+            word = word + self._convert_nn(mod)
+        return word
+
+    def vietnam_number(self, val):
+        if val < 100:
+            return self._convert_nn(val)
+        if val < 1000:
+            return self._convert_nnn(val)
+        for (didx, dval) in ((v - 1, 1000 ** v) for v in range(len(denom))):
+            if dval > val:
+                mod = 1000 ** didx
+                lval = val // mod
+                r = val - (lval * mod)
+
+                ret = self._convert_nnn(lval) + u' ' + denom[didx]
+                if 99 >= r > 0:
+                    ret = self._convert_nnn(lval) + u' ' + denom[didx] + u' lẻ'
+                if r > 0:
+                    ret = ret + ' ' + self.vietnam_number(r)
+                return ret
+
+    def to_cardinal(self, number):
+        return self.number_to_text(number)
+
+    def to_ordinal(self, number):
+        return self.to_cardinal(number)

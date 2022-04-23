@@ -1,31 +1,17 @@
 
-format = ['/', '[', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+']
+def cost(timeUse):
+    '''
+    timeUse have unit minute
+    '''
 
-def checkPassword(password: str):
-    lenString = len(password)
-    checkLower = 0
-    checkUpper = 0
-    checkNumber = 0
-    checkEspecial = 0
+    x = 25000
+    if (timeUse <= 50):
+        x += timeUse * 600
+        return x 
+    if (timeUse <= 200):
+        x += (timeUse - 50)* 400 + 50 * 600
+        return x
+    x += (timeUse - 200) * 200 + 50 * 600 + 150 * 400
+    return x
 
-    if lenString > 12 and lenString < 6:
-        print("length password must be larger than 6 and smaller than 12")
-        return False
-
-    for c in password:
-        if c.islower():
-            checkLower += 1
-        if c.isupper():
-            checkUpper += 1
-        if c.isnumeric():
-            checkNumber += 1
-        if c in format:
-            checkEspecial += 1
-
-    if checkLower == 0 or checkUpper == 0 or checkNumber == 0 or checkEspecial == 0:
-        print('Password does not satisfy the condition')
-        return False
-    
-    return True
-
-
+print(cost(2100))

@@ -1,5 +1,20 @@
 
 class Employee:
+    def setId(self, id):
+        self.id = id
+    def getId(self):
+        return self.id
+
+    def getName(self):
+        return self.name
+    def getName(self):
+        return self.name
+
+    def getSalary(self):
+        return self.salary
+    def getSalary(self):
+        return self.salary
+
     def __init__(self, id: str, name: str, salary: int):
         self.id = id 
         self.name = name

@@ -1,17 +1,21 @@
+# Exercise 1: Compute S =  1 + (2*1)/(2*1 - 1) + (2+4)/(1+3) + (2+4+6)/(1+3+5) + … (2+4+...+2n)/(1+3+...+(2n-1))
+print("============= Exercise 1 ==========================")
+n = int(input("Enter n \n"))
 
-def cost(timeUse):
-    '''
-    timeUse have unit minute
-    '''
+total = 1
+sumTop = 2
+sumBottom = 1
+indexTop = 2
+indexBottom = 1
 
-    x = 25000
-    if (timeUse <= 50):
-        x += timeUse * 600
-        return x 
-    if (timeUse <= 200):
-        x += (timeUse - 50)* 400 + 50 * 600
-        return x
-    x += (timeUse - 200) * 200 + 50 * 600 + 150 * 400
-    return x
+for _ in range(n):
 
-print(cost(2100))
+    indexTop += 2
+    indexBottom += 2
+    sumTop += indexTop
+    sumBottom += indexBottom
+
+    if (indexTop <= 2*n and indexBottom <= 2*n-1):
+        total += float(sumTop)/sumBottom
+
+print(f"Total = {total}")

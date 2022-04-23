@@ -1,43 +1,27 @@
+from math import sqrt
 
-def mySplit(name, delimiters=' \t\n'):
-    result = []
-    word = ''
-    for c in name:
-        if c not in delimiters:
-            word += c
-        elif word:
-            result.append(word)
-            word = ''
+def quadratic_equation_2(a, b, c):
+    '''
+    aX^2 + bX + c = 0
+    '''
+    if (a == 0):
+        if (b == 0):
+            print("The equation has no solution")
+        else:    
+            return -c/b
 
-    if word:
-        result.append(word)
+    delta = b**2 - 4*a*c
+    if delta > 0:
+        x1 = (-b + sqrt(delta))/(2*a)
+        x2 = (-b - sqrt(delta))/(2*a)
+        return x1, x2
+    elif delta == 0:
+        x = -b/(2*a)
+        return x
 
-    return result
+    print('The equation has no solution')
 
-def listToString(s): 
-    # initialize an empty string
-    str1 = "" 
-    # traverse in the string  
-    for ele in s: 
-        str1 += ele  
-    
-    return str1
 
-def Normailize(name):
-    splitName = mySplit(name)
+x1, x2 = quadratic_equation_2(3, 4, -7)
 
-    newName = []
-    for c in splitName:
-        newC = []
-        for i in range(len(c)):
-            if i == 0:
-                newC.append(c[0].upper())
-            else:
-                newC.append(c[i].lower())
-        nameString = listToString(newC)
-
-        newName.append(nameString)
-
-    return newName
-
-    
+print(x1, x2)
