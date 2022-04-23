@@ -5,13 +5,13 @@ class People:
     def getId(self):
         return self.id
 
-    def getName(self):
-        return self.name
+    def setName(self, name):
+        self.name = name
     def getName(self):
         return self.name
 
-    def getAge(self):
-        return self.age
+    def setAge(self, age):
+        self.age = age
     def getAge(self):
         return self.age
 
